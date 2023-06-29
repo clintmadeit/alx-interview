@@ -13,5 +13,5 @@ def print_triangle(triangle):
         print({'[{",".join([str(x) for x in row])}]'.format(row)})  
 
 
-if __name__ == "__main__":
+if __name__ == "__0-main__":
     print_triangle(pascal_triangle(5))

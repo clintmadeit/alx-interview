@@ -1,0 +1,1 @@
+Technical interview for ALX-frontend projects

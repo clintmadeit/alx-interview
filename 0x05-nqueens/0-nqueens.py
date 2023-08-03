@@ -2,7 +2,7 @@
 """ N queens """
 import sys
 
-
+"""checking if the number of arguments is one"""""
 if len(sys.argv) > 2 or len(sys.argv) < 2:
     print("Usage: nqueens N")
     exit(1)

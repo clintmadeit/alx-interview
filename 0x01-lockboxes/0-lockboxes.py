@@ -28,13 +28,12 @@ def canUnlockAll(boxes):
 
     aux = {}
     while True:
-        if len(aux) == 0:
+        if not aux:
             aux[0] = {
                 'status': 'opened',
                 'keys': boxes[0],
             }
-        keys = look_next_opened_box(aux)
-        if keys:
+        if keys := look_next_opened_box(aux):
             for key in keys:
                 try:
                     if aux.get(key) and aux.get(key).get('status') \

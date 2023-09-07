@@ -1,42 +1,31 @@
 #!/usr/bin/node
 
 const request = require('request');
-const film = process.argv[2] + '/';
 
-const endpoints = {
-  people: 'https://swapi-api.hbtn.io/api/people/',
-  planets: 'https://swapi-api.hbtn.io/api/planets/',
-  films: 'https://swapi-api.hbtn.io/api/films/',
-  species: 'https://swapi-api.hbtn.io/api/species/',
-  vehicles: 'https://swapi-api.hbtn.io/api/vehicles/',
-  starships: 'https://swapi-api.hbtn.io/api/starships/'
-};
+const movieId = process.argv[2];
+const movieEndpoint = 'https://swapi-api.alx-tools.com/api/films/' + movieId;
 
-const url = endpoints.films + film;
+function sendRequest (characterList, index) {
+  if (characterList.length === index) {
+    return;
+  }
 
-const payload = {
-  url: url,
-  method: 'GET'
-};
+  request(characterList[index], (error, response, body) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(JSON.parse(body).name);
+      sendRequest(characterList, index + 1);
+    }
+  });
+}
 
-request(payload, async (err, res, data) => {
-  if (err) return;
+request(movieEndpoint, (error, response, body) => {
+  if (error) {
+    console.log(error);
+  } else {
+    const characterList = JSON.parse(body).characters;
 
-  data = JSON.parse(data);
-  const characters = data.characters;
-
-  const makePromise = (url) => {
-    return new Promise(function (resolve, reject) {
-      request(url, (err, res, data) => {
-        if (err) reject(err);
-        else resolve(data);
-      });
-    });
-  };
-
-  for (const character in characters) {
-    const res = await makePromise(characters[character]);
-    const data = JSON.parse(res);
-    console.log(data.name);
+    sendRequest(characterList, 0);
   }
 });

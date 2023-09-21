@@ -22,7 +22,7 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    if len(coins) is 0:
+    if len(coins) == 0:
         return -1
     coins = sorted(coins)
     dynamic = [float('inf')] * (total + 1)
@@ -33,6 +33,4 @@ def makeChange(coins, total):
                 break
             if dynamic[i - coin] != -1:
                 dynamic[i] = min(dynamic[i - coin] + 1, dynamic[i])
-    if dynamic[total] == float('inf'):
-        return -1
-    return dynamic[total]
+    return -1 if dynamic[total] == float('inf') else dynamic[total]
